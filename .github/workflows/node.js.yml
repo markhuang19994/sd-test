@@ -29,15 +29,21 @@ jobs:
     - run: npm ci
     - run: node build-output.js
     
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v2
+    - name: Push to xx branch
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        
+        # 確保目標分支存在
+        git checkout -b xx || git checkout xx
+        
+        # 添加構建產物
+        git add build/*
+        
+        # 提交更改
+        git commit -m "Auto build and push to xx branch"
+        
+        # 強制推送到xx分支
+        git push -f origin xx
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-        files: |   
-          build/css/variables.css
