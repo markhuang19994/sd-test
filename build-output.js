@@ -7,6 +7,10 @@ register(StyleDictionary, {
   excludeParentKeys: true,
 });
 
+const cssCommonOptions = {
+  outputReferences: true,
+  outputReferenceFallbacks: true
+};
 const sd = new StyleDictionary({
   // make sure to have source match your token files!
   // be careful about accidentally matching your package.json or similar files that are not tokens
@@ -21,6 +25,23 @@ const sd = new StyleDictionary({
         {
           destination: 'variables.css',
           format: 'css/variables',
+	  options: {
+            ...cssCommonOptions
+	  }
+        },
+        {
+          destination: 'variables.scss',
+          format: 'scss/map-deep',
+	  options: {
+            ...cssCommonOptions
+	  }
+        },
+        {
+          destination: 'variables-map.scss',
+          format: 'scss/map-deep',
+	  options: {
+            ...cssCommonOptions
+	  }
         },
       ],
     },
